@@ -1,5 +1,5 @@
 def calc(x,y,opr):
-    result = eval(x + opr + y)
+    result = eval(x + opr + y)  # eval('1 + 4')
     print("Result is",result)
 
 while True:
