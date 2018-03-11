@@ -1,4 +1,6 @@
 from datetime import datetime
+import DataIO
+
 users = []
 usersData = {}
 
@@ -21,7 +23,11 @@ def post(username):
     login_success(username)
 
 def view_profile(username):
-    pass
+    print("Your Profile")
+    print("Username :",username)
+    user_post = list(filter(lambda x : x['username'] == username, userPost))
+    for p in user_post:
+        print(p)
 
 def update_profile(username):
     pass
@@ -68,15 +74,21 @@ def login():
     useremail = input("Enter your EmailID : ")
     userpwd = input("Enter your password : ")
 
-    for data in users:
-        if data['usermail'] == useremail and data['userpwd'] == userpwd:
-            print("Login Successfull")
-            # break
-            login_success(data['username'])
-        else:
-            print("Login Failed...")
+    # for data in users:
+    #     if data['usermail'] == useremail and data['userpwd'] == userpwd:
+    #         print("Login Successfull")
+    #         # break
+    #         login_success(data['username'])
+    #     else:
+    #         print("Login Failed...")
 
-    # print("Login Now")
+    data = DataIO.read_data()
+
+    for user in data:
+        # print(user)
+        if useremail in user and userpwd in user:
+            print("Login Success")
+            login_success(user[0])
     
 def register():
     # print("Register Now")
@@ -91,8 +103,14 @@ def register():
 
     users.append(usersData.copy())
     print("Registered Successfully...")
+
+    read_user()
+
+def read_user():
     for data in users:
         print(data)
+
+    DataIO.save_data(users)
 
 main = True
 while main:
